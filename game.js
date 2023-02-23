@@ -4,30 +4,45 @@ window.onload = function () {
     var finish = document.getElementById('end')
     var walls = document.getElementsByClassName('boundary')
     var statusChange = document.getElementById('status')
-    // reset the walls color and timer:
-
-    // begin.addEventListener('click', reset)
-    // function reset() {
-    //     document.getElementsByClassName('boundary').reset();
-    //     // document.getElementsByClassName('timer').reset();
-    // }
 
     // start game
+    var gameStarted = false
     begin.addEventListener('mouseover', startGame)
     function startGame() {
         statusChange.innerHTML = 'The game has started'
+        gameStarted = true
     }
-    // losing
+    // reset
+    begin.addEventListener('click', reset)
+    function reset() {
+        statusChange.innerHTML = 'The game has reset'
+        for (let wall of walls) {
+            wall.classList.remove("youlose");
+        }
+        gameStarted = true
+    }
+
+    // losing 
     for (let wall of walls) {
         wall.addEventListener('mouseenter', lostGame)
     }
     function lostGame() {
-        statusChange.innerHTML = 'You lost!';
-        for (let wall of walls) {
-            wall.style.backgroundColor = 'red';
+        if (gameStarted) {
+            statusChange.innerHTML = 'You lost!';
+            for (let wall of walls) {
+                wall.classList.add("youlose");
+            }
         }
     }
-    // Winning
+    // winning (maybe add mouseenter and mouseleave to prevent cheating?)
+    finish.addEventListener('mouseover', win)
+    function win() {
+        if (gameStarted) {
+            statusChange.innerHTML = 'You Won!'
+        }
+    }
+    // 
+
 
 }
 
