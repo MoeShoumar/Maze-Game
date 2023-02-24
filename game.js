@@ -12,6 +12,7 @@ window.onload = function () {
     function startGame() {
         statusChange.innerHTML = 'The game has started'
         gameStarted = true
+        gameFinished = false
         console.log(startGame);
     }
 
@@ -28,13 +29,14 @@ window.onload = function () {
             console.log(lostGame);
         }
         else if (gameStarted && gameFinished) {
-            statusChange.innerHTML = 'You already WON BRO! Start a New game';
+            statusChange.innerHTML = 'You already WON ! Start a New game';
             for (let wall of walls) {
                 wall.classList.remove("youlose");
             }
             console.log(lostGame);
 
         }
+
     }
     // reset
     begin.addEventListener('click', reset)
@@ -44,6 +46,7 @@ window.onload = function () {
             wall.classList.remove("youlose");
         }
         gameStarted = false
+        gameFinished = false
         winCount = 0
         score.innerHTML = 'Score: ' + winCount
         console.log(reset);
@@ -54,14 +57,13 @@ window.onload = function () {
     finish.addEventListener('mouseover', win)
     var winCount = 0;
     function win() {
-        if (gameStarted) {
+        if (gameStarted && !gameFinished) {
             winCount += 10
             statusChange.innerHTML = 'You Won!'
             gameFinished = true
             score.innerHTML = 'Score: ' + winCount
-
+            console.log(win);
         }
-        console.log(win);
 
 
     }
