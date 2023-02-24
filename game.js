@@ -5,6 +5,7 @@ window.onload = function () {
     var walls = document.getElementsByClassName('boundary')
     var statusChange = document.getElementById('status')
     var score = document.getElementById('score')
+    var cheat = document.getElementById('game')
 
     // start game
     var gameStarted = false
@@ -13,7 +14,11 @@ window.onload = function () {
         statusChange.innerHTML = 'The game has started'
         gameStarted = true
         gameFinished = false
+        for (let wall of walls) {
+            wall.classList.remove("youlose");
+        }
         console.log(startGame);
+
     }
 
     // losing 
@@ -21,12 +26,15 @@ window.onload = function () {
         wall.addEventListener('mouseenter', lostGame)
     }
     function lostGame() {
-        if (gameStarted) {
+        if (gameStarted && !gameFinished) {
             statusChange.innerHTML = 'You lost! Press S to reset';
+            winCount -= 10
+            score.innerHTML = 'Score: ' + winCount
             for (let wall of walls) {
                 wall.classList.add("youlose");
             }
             console.log(lostGame);
+            gameStarted = false
         }
         else if (gameStarted && gameFinished) {
             statusChange.innerHTML = 'You already WON ! Start a New game';
@@ -58,13 +66,23 @@ window.onload = function () {
     var winCount = 0;
     function win() {
         if (gameStarted && !gameFinished) {
-            winCount += 10
+            winCount += 5
             statusChange.innerHTML = 'You Won!'
             gameFinished = true
             score.innerHTML = 'Score: ' + winCount
             console.log(win);
         }
 
+
+    }
+    // Cheating
+    cheat.addEventListener('mouseleave', cheated)
+    function cheated() {
+        if (gameStarted && !gameFinished) {
+            statusChange.innerHTML = 'About to cheat?!You cant get the mouse out of the maze after starting!'
+            gameStarted = false
+            gameFinished = false
+        }
 
     }
 
