@@ -12,6 +12,29 @@ window.onload = function () {
     function startGame() {
         statusChange.innerHTML = 'The game has started'
         gameStarted = true
+        console.log(startGame);
+    }
+
+    // losing 
+    for (let wall of walls) {
+        wall.addEventListener('mouseenter', lostGame)
+    }
+    function lostGame() {
+        if (gameStarted) {
+            statusChange.innerHTML = 'You lost! Press S to reset';
+            for (let wall of walls) {
+                wall.classList.add("youlose");
+            }
+            console.log(lostGame);
+        }
+        else if (gameStarted && gameFinished) {
+            statusChange.innerHTML = 'You already WON BRO! Start a New game';
+            for (let wall of walls) {
+                wall.classList.remove("youlose");
+            }
+            console.log(lostGame);
+
+        }
     }
     // reset
     begin.addEventListener('click', reset)
@@ -20,31 +43,12 @@ window.onload = function () {
         for (let wall of walls) {
             wall.classList.remove("youlose");
         }
-        gameStarted = true
+        gameStarted = false
         winCount = 0
         score.innerHTML = 'Score: ' + winCount
+        console.log(reset);
     }
 
-    // losing 
-    for (let wall of walls) {
-        wall.addEventListener('mouseenter', lostGame)
-    }
-    function lostGame() {
-        if (gameStarted && !gameFinished) {
-            statusChange.innerHTML = 'You lost!';
-            for (let wall of walls) {
-                wall.classList.add("youlose");
-            }
-        }
-        else if (gameStarted && gameFinished) {
-            statusChange.innerHTML = 'You already WON BRO! Start a New game';
-            for (let wall of walls) {
-                wall.classList.remove("youlose");
-            }
-        }
-
-
-    }
     // winning (maybe add mouseenter and mouseleave to prevent cheating?)
     var gameFinished = false
     finish.addEventListener('mouseover', win)
@@ -57,6 +61,7 @@ window.onload = function () {
             score.innerHTML = 'Score: ' + winCount
 
         }
+        console.log(win);
 
 
     }
@@ -65,16 +70,5 @@ window.onload = function () {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
